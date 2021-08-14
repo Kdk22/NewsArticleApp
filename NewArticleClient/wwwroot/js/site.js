@@ -2,10 +2,11 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your Javascript code.
-const uri = 'api/TodoItems';
-let todos = [];
+const uri = 'https://localhost:5001/api/NewsArticle/';
+let articles = [];
 
 function getItems() {
+    alert("blaa");
     fetch(uri)
         .then(response => response.json())
         .then(data => _displayItems(data))
@@ -13,11 +14,14 @@ function getItems() {
 }
 
 function addItem() {
-    const addNameTextbox = document.getElementById('add-name');
+    const addTitleTextbox = document.getElementById('add-title');
+    const addDescriptionTextbox = document.getElementById('add-description');
+    const addImageTextbox = document.getElementById('add-image');
 
     const item = {
-        isComplete: false,
-        name: addNameTextbox.value.trim()
+        name: addTitleTextbox.value.trim(),
+        description: addDescriptionTextbox.value.trim(),
+        imageURL: addImageTextbox.value.trim()
     };
 
     fetch(uri, {
@@ -31,7 +35,9 @@ function addItem() {
         .then(response => response.json())
         .then(() => {
             getItems();
-            addNameTextbox.value = '';
+            addTitleTextbox.value = '';
+            addDescriptionTextbox.value = '';
+            addImageTextbox.value = '';
         })
         .catch(error => console.error('Unable to add item.', error));
 }
@@ -47,9 +53,9 @@ function deleteItem(id) {
 function displayEditForm(id) {
     const item = todos.find(item => item.id === id);
 
-    document.getElementById('edit-name').value = item.name;
+    document.getElementById('edit-title').value = item.name;
     document.getElementById('edit-id').value = item.id;
-    document.getElementById('edit-isComplete').checked = item.isComplete;
+    document.getElementById('edit-image').value = item.imageURL;
     document.getElementById('editForm').style.display = 'block';
 }
 
@@ -57,8 +63,10 @@ function updateItem() {
     const itemId = document.getElementById('edit-id').value;
     const item = {
         id: parseInt(itemId, 10),
-        isComplete: document.getElementById('edit-isComplete').checked,
-        name: document.getElementById('edit-name').value.trim()
+        name: document.getElementById('add-title').value.trim(),
+        description: document.getElementById('add-description').value.trim(),
+        imageURL: document.getElementById('add-image').value.trim()
+      
     };
 
     fetch(`${uri}/${itemId}`, {
@@ -88,7 +96,7 @@ function _displayCount(itemCount) {
 }
 
 function _displayItems(data) {
-    const tBody = document.getElementById('todos');
+    const tBody = document.getElementById('all-blogs');
     tBody.innerHTML = '';
 
     _displayCount(data.length);
@@ -96,10 +104,10 @@ function _displayItems(data) {
     const button = document.createElement('button');
 
     data.forEach(item => {
-        let isCompleteCheckbox = document.createElement('input');
-        isCompleteCheckbox.type = 'checkbox';
-        isCompleteCheckbox.disabled = true;
-        isCompleteCheckbox.checked = item.isComplete;
+        //let isCompleteCheckbox = document.createElement('input');
+        //isCompleteCheckbox.type = 'checkbox';
+        //isCompleteCheckbox.disabled = true;
+        //isCompleteCheckbox.checked = item.isComplete;
 
         let editButton = button.cloneNode(false);
         editButton.innerText = 'Edit';
@@ -109,21 +117,34 @@ function _displayItems(data) {
         deleteButton.innerText = 'Delete';
         deleteButton.setAttribute('onclick', `deleteItem(${item.id})`);
 
-        let tr = tBody.insertRow();
+        
 
-        let td1 = tr.insertCell(0);
-        td1.appendChild(isCompleteCheckbox);
+        const l1 = tBody.createElement("li")
+        const textNode1 = document.createTextNode(item.name)
+        l1.appendChild(textNode1);
+        tBody.appendChild(l1);
 
-        let td2 = tr.insertCell(1);
-        let textNode = document.createTextNode(item.name);
-        td2.appendChild(textNode);
+        const l2 = tBody.createElement("li")
+        const textNode2 = document.createTextNode(item.description)
+        l1.appendChild(textNode2);
+        tBody.appendChild(l1);
 
-        let td3 = tr.insertCell(2);
-        td3.appendChild(editButton);
+        const l3 = tBody.createElement("li")
+        const textNode3 = document.createTextNode(item.datePublished)
+        l3.appendChild(textNode3);
+        tBody.appendChild(l3);
 
-        let td4 = tr.insertCell(3);
+        const l4 = tBody.createElement("li")
+        const textNode4 = document.createTextNode(item.imageURL)
+        l4.appendChild(textNode4);
+        tBody.appendChild(l4);
+
+        let l5 = tBody.createElement("li")
+        l5.appendChild(editButton);
+
+        let td4 = tBody.createElement("li");
         td4.appendChild(deleteButton);
     });
 
-    todos = data;
+    articles = data;
 }
