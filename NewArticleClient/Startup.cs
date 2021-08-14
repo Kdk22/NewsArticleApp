@@ -5,16 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using Microsoft.EntityFrameworkCore;
-using NewsArticle.Model;
 
-namespace NewsArticle
+namespace NewArticleClient
 {
     public class Startup
     {
@@ -28,15 +23,7 @@ namespace NewsArticle
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllers();
-            services.AddDbContext<ArticleContext>(opt =>
-                                            opt.UseInMemoryDatabase("NewsArticle"));
-         
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "NewsArticle", Version = "v1" });
-            //});
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,13 +32,16 @@ namespace NewsArticle
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseSwagger();
-                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NewsArticle v1"));
             }
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
 
@@ -59,7 +49,7 @@ namespace NewsArticle
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapRazorPages();
             });
         }
     }

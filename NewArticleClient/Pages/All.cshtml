@@ -1,0 +1,20 @@
+﻿@page
+@{
+}
+
+<ul id="all-blogs">
+
+</ul>
+
+<script>
+    const allBlogs = document.getElementById("all-blogs");
+    const data = fetch().then(
+        r => r.json()
+    ).then(d => {
+        d.forEach(b => {
+            const li = document.createElement("li")
+            const textNode = document.createTextNode("")
+        })
+    })
+
+</script>

@@ -1,0 +1,27 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<h1>To-do CRUD</h1>
+<h3>Add</h3>
+<form method="POST" onsubmit="addItem()">
+    <input type="text" id="add-title" placeholder="New to-do">
+    <input type="text" id="add-description" placeholder="Description" />
+    <input type="text" id="add-datetime" placeholder="Date Time" />
+    <input type="text" id="add-image" placeholder="Image Url" />
+    <input id="add-submit" type="submit" value="Add">
+</form>
+
+<script>
+    const submitBtn = document.getElementById("add-submit");
+    submitBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const data {
+            title: document.getElementById('add-title').value ,
+
+        }
+        fetch("https://localhost:5000")
+    })
+</script>
+

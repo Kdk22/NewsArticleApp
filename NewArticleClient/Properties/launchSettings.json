@@ -1,11 +1,10 @@
-﻿{
-  "$schema": "http://json.schemastore.org/launchsettings.json",
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:35592",
-      "sslPort": 44304
+      "applicationUrl": "http://localhost:39667",
+      "sslPort": 44316
     }
   },
   "profiles": {
@@ -16,11 +15,10 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "NewsArticle": {
+    "NewArticleClient": {
       "commandName": "Project",
-      "dotnetRunMessages": "true",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "applicationUrl": "https://localhost:31033;http://localhost:5831",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
