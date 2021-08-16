@@ -10,7 +10,7 @@ using NewsArticle.Model;
 namespace NewsArticle.Migrations
 {
     [DbContext(typeof(ArticleContext))]
-    [Migration("20210816160634_‘InitialCreate’")]
+    [Migration("20210816194153_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,9 +24,7 @@ namespace NewsArticle.Migrations
             modelBuilder.Entity("NewsArticle.Model.Article", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("DatePublished")
                         .HasColumnType("datetime2");
@@ -35,6 +33,7 @@ namespace NewsArticle.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageURL")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
