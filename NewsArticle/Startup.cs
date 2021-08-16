@@ -30,9 +30,14 @@ namespace NewsArticle
         {
 
             services.AddControllers();
-            services.AddDbContext<ArticleContext>(opt =>
-                                            opt.UseInMemoryDatabase("NewsArticle"));
-         
+            //services.AddDbContext<ArticleContext>(options =>
+            //                                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<ArticleContext>(options => {
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DataConnection"));
+            });
+
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "NewsArticle", Version = "v1" });
