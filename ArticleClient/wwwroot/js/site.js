@@ -9,6 +9,25 @@ $(window).on("load", function () {
     getItems()
 });
 
+function getItems() {
+    $.ajax({
+        type: 'GET',
+        url: 'https://localhost:5001/api/NewsArticle/',
+        beforeSend: function () {
+            //Show(); // Show loader icon  
+        },
+        success: function (data) {
+            console.log('success', data);
+            _displayItems(data);
+        },
+        complete: function () {
+            //Hide(); // Hide loader icon  
+        },
+        failure: function (jqXHR, textStatus, errorThrown) {
+            alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText); // Display error message  
+        }  
+    });
+};
 
 function getItems() {
     alert("blaa");
