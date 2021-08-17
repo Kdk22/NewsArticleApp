@@ -5,6 +5,11 @@
 const uri = 'https://localhost:5001/api/NewsArticle/';
 let articles = [];
 
+$(window).on("load", function () {
+    getItems()
+});
+
+
 function getItems() {
     alert("blaa");
     fetch(uri)

@@ -10,8 +10,11 @@
     <ul onload="getItems" id="all-blogs">
     </ul>
 </div>
-@section JavaScript
-{
-    <script type="text/javascript" src="@Url.Content("../js/site.js")"></script>
-    @*<script type="text/javascript" src="@Url.Content("/Scripts/AnotherScript.js")"></script>*@
-}
+<script>
+    $(window).on("load", function () {
+        alert("aaa")
+    });
+
+    $("#btn").click(function () {
+        alert("aa");
+    });</script>
