@@ -29,13 +29,13 @@ function getItems() {
     });
 };
 
-function getItems() {
-    alert("blaa");
-    fetch(uri)
-        .then(response => response.json())
-        .then(data => _displayItems(data))
-        .catch(error => console.error('Unable to get items.', error));
-}
+//function getItems() {
+//    alert("blaa");
+//    fetch(uri)
+//        .then(response => response.json())
+//        .then(data => _displayItems(data))
+//        .catch(error => console.error('Unable to get items.', error));
+//}
 
 function addItem() {
     const addTitleTextbox = document.getElementById('add-title');
@@ -114,9 +114,10 @@ function closeInput() {
 }
 
 function _displayCount(itemCount) {
-    const name = (itemCount === 1) ? 'to-do' : 'to-dos';
+    const name = (itemCount === 1) ? 'Article' : 'Articles';
 
     document.getElementById('counter').innerText = `${itemCount} ${name}`;
+    debugger;
 }
 
 function _displayItems(data) {
@@ -141,33 +142,43 @@ function _displayItems(data) {
         deleteButton.innerText = 'Delete';
         deleteButton.setAttribute('onclick', `deleteItem(${item.id})`);
 
+        var x = document.createElement("IMG");
+        x.setAttribute("src", item.imageURL);
+        x.setAttribute("width", "304");
+        x.setAttribute("height", "228");
+        x.setAttribute("alt", "Image");
+        tBody.appendChild(x);
 
-
-        const l1 = tBody.createElement("li")
+        const l1 = document.createElement("div")
         const textNode1 = document.createTextNode(item.name)
         l1.appendChild(textNode1);
         tBody.appendChild(l1);
 
-        const l2 = tBody.createElement("li")
-        const textNode2 = document.createTextNode(item.description)
-        l1.appendChild(textNode2);
-        tBody.appendChild(l1);
+        //const l2 = document.createElement("li")
+        //const textNode2 = document.createTextNode(item.description)
+        //l1.appendChild(textNode2);
+        //tBody.appendChild(l1);
 
-        const l3 = tBody.createElement("li")
-        const textNode3 = document.createTextNode(item.datePublished)
-        l3.appendChild(textNode3);
-        tBody.appendChild(l3);
+        //const l3 = document.createElement("li")
+        //const textNode3 = document.createTextNode(item.datePublished)
+        //l3.appendChild(textNode3);
+        //tBody.appendChild(l3);
 
-        const l4 = tBody.createElement("li")
-        const textNode4 = document.createTextNode(item.imageURL)
-        l4.appendChild(textNode4);
-        tBody.appendChild(l4);
+        //const l4 = document.createElement("li")
+        //const textNode4 = document.createTextNode(item.imageURL)
+        //l4.appendChild(textNode4);
+        //tBody.appendChild(l4);
 
-        let l5 = tBody.createElement("li")
-        l5.appendChild(editButton);
+        let l5 = document.createElement("div")
+        let sp1 = document.createElement("span")
+        l5.appendChild(sp1);
 
-        let td4 = tBody.createElement("li");
-        td4.appendChild(deleteButton);
+    
+        let sp2 = document.createElement("san");
+        l5.appendChild(sp2);
+        tBody.appendChild(l5)
+
+        
     });
 
     articles = data;
