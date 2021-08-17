@@ -14,6 +14,7 @@ namespace NewsArticle.Model
             public string Name { get; set; }
             public string Description { get; set; }
             public DateTime DatePublished { get; set; } = DateTime.Now;
+        public string UserId { get; set; }
 
         [DataType(DataType.Upload)]
         [Display(Name = "Upload File")]
