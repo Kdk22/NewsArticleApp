@@ -1,13 +1,27 @@
-﻿<!DOCTYPE html>
+﻿@page
+@model ArticleClient.Pages.CreateModel
+@{
+}
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-</head>
-<body>
-    <div>
-        @RenderBody()
+<form onsubmit="postItem()">
+    <div class="form-group">
+        <label class="control-label">Title: </label>
+        <input id="name-input" class="form-control" />
+        <span class="text-danger"></span>
     </div>
-</body>
-</html>
+    <div class="form-group">
+        <label class="control-label">Description: </label>
+        <input id="description-input" class="form-control" />
+        <span class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <p>
+            <input type="file" name="photo" onchange="previewFile(this);" required>
+        </p>
+        <img id="previewImg" src="" width="250" height="300" alt="Placeholder">
+
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
