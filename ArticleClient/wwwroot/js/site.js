@@ -6,12 +6,18 @@ const uri = 'https://localhost:5001/api/NewsArticle/';
 let articles = [];
 let imageFile = "";
 
-$(window).load(function () {
-    getItems()
+$(window).load( function () {
+
+     getItems()
+
+ 
+    
+    
 });
 
 
-function getItems() {
+ function  getItems() {
+    debugger
     $.ajax({
         type: 'GET',
         url: 'https://localhost:5001/api/NewsArticle/',
@@ -20,7 +26,25 @@ function getItems() {
         },
         success: function (data) {
             console.log('success', data);
-            _displayItems(data);
+            debugger
+            articles = data
+            if (window.location.pathname === '/Create') {
+                var href = location.href;
+                var id = href.substring(href.indexOf("?") + 1);
+
+                var regex = /=(.+)/; // match '=' and capture everything that follows
+
+                if (!!id) {
+                    var matches = id.match(regex);
+                    var match = matches[1];  // captured group, in this case, '7'
+                    //await getItems()
+
+                    displayEditForm(match);
+                }
+            } else {
+                _displayItems(data);
+
+            }
         },
         complete: function () {
             //Hide(); // Hide loader icon  
@@ -35,7 +59,6 @@ function getItems() {
 const toBase64 = file => new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    debugger
     reader.onload = () => resolve(reader.result);
     reader.onerror = error => reject(error);
 });
@@ -46,14 +69,12 @@ async function postItem() {
    
     //var image = $('#previewImg').attr('src');
     var token = document.querySelector('input[name="__RequestVerificationToken"]').getAttribute("value");
-    debugger
     var image = imageFile;
     const result = await toBase64(image).catch(e => Error(e));
     //var base64ImageContent = image.replace(/^data:image\/(png|jpg);base64,/, "");
     var blob = base64ToBlob(base64ImageContent, 'image/png');
     const addTitleTextbox = document.getElementById('name-input');
     const addDescriptionTextbox = document.getElementById('description-input');
-    debugger
     //var formData = {};
     //formData.append('imageurl', image.name);
     //formData.append('name', addTitleTextbox)
@@ -65,7 +86,6 @@ async function postItem() {
         imageURL: result,
         userId: "1"
     };
-    debugger
 
     $.ajax({
         type: "POST",
@@ -133,12 +153,13 @@ function deleteItem(id) {
 }
 
 function displayEditForm(id) {
-    const item = todos.find(item => item.id === id);
-
-    document.getElementById('edit-title').value = item.name;
-    document.getElementById('edit-id').value = item.id;
-    document.getElementById('edit-image').value = item.imageURL;
-    document.getElementById('editForm').style.display = 'block';
+    debugger;
+    const item = articles.find(item => item.id === parseInt(id));
+    document.getElementById('name-input').value = item.name;
+    document.getElementById('description-input').value = item.id;
+    document.getElementById('previewImg').value = item.imageURL;
+    document.getElementById('submit').value = "Update";
+    //document.getElementById('editForm').style.display = 'block';
 }
 
 function updateItem() {
@@ -175,7 +196,6 @@ function _displayCount(itemCount) {
     const name = (itemCount === 1) ? 'Article' : 'Articles';
 
     document.getElementById('counter').innerHTML = `${itemCount} ${name}`;
-    debugger;
 }
 function previewFile(input) {
     var file = $("input[type=file]").get(0).files[0];
@@ -201,14 +221,19 @@ function format(input) {
     ].join('/');
 }
 
+function loadData(data) {
+
+}
+
 function _displayItems(data) {
     const tBody = document.getElementById('all-blogs');
-    debugger;
     tBody.innerHTML = '';
 
     _displayCount(data.length);
 
     const button = document.createElement('button');
+
+
 
     data.forEach(item => {
         //let isCompleteCheckbox = document.createElement('input');
@@ -254,27 +279,31 @@ function _displayItems(data) {
         //const textNode4 = document.createTextNode(item.imageURL)
         //l4.appendChild(textNode4);
         //tBody.appendChild(l4);
-        let sp2 = document.createElement("span");
+        let sp2 = document.createElement("div");
      
         tBody.appendChild(sp2)
 
-        let btnEdit = document.createElement("button");
-        btnEdit.innerHTML = "Delete";
-        sp2.appendChild(btnEdit);
-        btnEdit.onclick = function () {
-
-        };
-
-        let btnDelete = document.createElement("button");
-        btnDelete.innerHTML = "Edit";
+        let btnDelete  = document.createElement("button");
+        btnDelete.innerHTML = "Delete";
         sp2.appendChild(btnDelete);
-        btnEdit.onclick = function () {
+        btnDelete.onclick = function () {
             if (confirm("Do you want to Delete !")) {
                 deleteItem(item.id);
 
             } else {
-                txt = "You pressed Cancel!";
+
             }
+        };
+        
+
+        let btnEdit = document.createElement("button");
+        btnEdit.innerHTML = "Edit";
+        sp2.appendChild(btnEdit);
+        btnEdit.onclick = async function () {
+            await document.location.replace(`./Create?id=${item.id}`);
+                displayEditForm(item);
+            
+
         };
 
 
@@ -289,6 +318,7 @@ function _displayItems(data) {
 
         
     });
+    debugger
 
     articles = data;
 }
