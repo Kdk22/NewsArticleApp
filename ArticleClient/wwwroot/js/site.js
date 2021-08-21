@@ -156,8 +156,8 @@ function displayEditForm(id) {
     debugger;
     const item = articles.find(item => item.id === parseInt(id));
     document.getElementById('name-input').value = item.name;
-    document.getElementById('description-input').value = item.id;
-    document.getElementById('previewImg').value = item.imageURL;
+    document.getElementById('description-input').value = item.description;
+    document.getElementById('previewImg').setAttribute = item.imageURL
     document.getElementById('submit').value = "Update";
     //document.getElementById('editForm').style.display = 'block';
 }
